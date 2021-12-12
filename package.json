@@ -11,7 +11,8 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.16.4",
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.15",
+    "pg": "^8.7.1"
   },
   "devDependencies": {
     "@cucumber/cucumber": "*",
