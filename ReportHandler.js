@@ -1,16 +1,27 @@
 const ReportsDataBaseHandler = require('./ReportsDataBaseHandler')
+const db_password = require('./db_password')
 
 class ReportHandler {
 
     constructor() {
         this.reportsDbHandler = new ReportsDataBaseHandler({
-            user: 'joaquinfontela',
-            host: 'localhost',
-            database: 'recursos',
-            password: 'admin',
+            user: 'fqhdvfjibpslvq',
+            host: 'ec2-52-86-177-34.compute-1.amazonaws.com',
+            database: 'd591fltfo2mqg4',
+            password: db_password,
             port: 5432,
+            ssl: {
+                rejectUnauthorized: false
+            }
         })
     }
+
+
+    async deleteReport(reportId) {
+        // Deletes the report with id 'reportId' from the database.
+        return await this.reportsDbHandler.deleteReport(reportId)
+    }
+
 
     async saveReport(employeeId, workId,
         date, hours, minutes, description) {
@@ -23,10 +34,6 @@ class ReportHandler {
             date, hours * 60 + minutes, description)
     }
 
-    async deleteReport(reportId) {
-        // Deletes the report with id 'reportId' from the database.
-        return await this.reportsDbHandler.deleteReport(reportId)
-    }
 }
 
 module.exports = ReportHandler
