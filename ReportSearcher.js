@@ -34,7 +34,7 @@ class ReportSearcher {
         // The function returns all the reports which were accomplished between 'init_date' and 'end_date'
         // string parameters.
         // The return value is an array of objects in the format:
-        // {id, employee name, employee last name, project name, work name, date, hours dedicated}
+        // {id, employee name, employee last name, project name, work name, date, minutes dedicated}
         const reports = await this.reportsDbHandler.getReportsByDate(init_date, end_date)
 
         let updatedReports = []
@@ -50,7 +50,7 @@ class ReportSearcher {
     async getReportsByProjectId(projectId) {
         // The function returns all the reports where the project id is 'projectId'.
         // The return value is an array of objects in the format:
-        // {id, employee name, employee last name, project name, work name, date, hours dedicated}
+        // {id, employee name, employee last name, project name, work name, date, minutes dedicated}
         const works = await this.projectsApiHandler.getAllWorksFromProject(projectId)
 
         let reports = []
@@ -67,6 +67,10 @@ class ReportSearcher {
 
 
     async getReportsByWorkAndEmployeeIds(workId, employeeId) {
+        // The function returns all the reports where the work id is 'workId' and
+        // the employee id is 'employeeId'.
+        // The return value is an array of objects in the format:
+        // {date, minutes dedicated}
         return await this.reportsDbHandler.getReportsByWorkAndEmployeeIds(workId, employeeId)
     }
 
@@ -74,7 +78,7 @@ class ReportSearcher {
     async getReportsByWorkId(workId) {
         // The function returns all the reports where the work id is 'workId'.
         // The return value is an array of objects in the format:
-        // {id, employee name, employee last name, project name, work name, date, hours dedicated}
+        // {id, employee name, employee last name, project name, work name, date, minutes dedicated}
         const reports = await this.reportsDbHandler.getReportsByWorkId(workId)
 
         let updatedReports = []
@@ -87,6 +91,11 @@ class ReportSearcher {
     }
 
     async updateReportWorkAndProyectName(report, works = undefined) {
+        // Receives 'report', an object representing a report as a parameter
+        // and an optional parameter 'works' which represents the works associated with the project
+        // in which the report took place.
+        // Returns the report updated with additional attributes: 'project' (name) and 'work' (name)
+        // and deletes its work_id attribute.
         const projectId = await this.projectsApiHandler.getProjectIdAssociatedToWork(report.work_id)
 
         const projects = await this.projectsApiHandler.getAllProjects()

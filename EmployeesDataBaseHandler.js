@@ -10,6 +10,7 @@ class EmployeesDataBaseHandler {
     }
 
     async getEmployees() {
+        // Returns all employees registered in the system.
         const res = await this.client.query('SELECT * FROM public.resources')
         return res.rows
     }

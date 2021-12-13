@@ -2,7 +2,7 @@ class ProjectsApiHandler {
 
     constructor() { }
 
-    getAllProjects() {
+    async getAllProjects() {
         // Returns an array with all existent projects in the following format:
         // {id, project name}.
         return [{
@@ -23,7 +23,7 @@ class ProjectsApiHandler {
         }]
     }
 
-    getAllWorksFromProject(projectId) {
+    async getAllWorksFromProject(projectId) {
         // Returns an array with all existent works which correspond to project
         // with id 'projectId' in the following format:
         // {id, work name}.
@@ -76,7 +76,9 @@ class ProjectsApiHandler {
         }
     }
 
-    getProjectIdAssociatedToWork(workId) {
+    async getProjectIdAssociatedToWork(workId) {
+        // Recieves a work id 'workId' and returns the id of the project in which
+        // the work was registered.
         if (workId < 10) return 1;
         else if (workId < 20) return 2;
         else return 3;

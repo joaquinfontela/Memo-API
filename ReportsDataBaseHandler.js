@@ -93,6 +93,10 @@ class ReportsDataBaseHandler {
 
 
     async getReportsByWorkAndEmployeeIds(workId, employeeId) {
+        // The function returns all the reports where the work id is 'workId' and
+        // the employee id is 'employeeId'.
+        // The return value is an array of objects in the format:
+        // {date, minutes dedicated}
         const res = await this.client.query(`SELECT date, minutes
                                            FROM public.assigned_time 
                                            WHERE work_id = ${workId} AND resource_id = ${employeeId}

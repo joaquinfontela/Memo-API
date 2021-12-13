@@ -17,8 +17,8 @@ class EmployeesSearcher {
     }
 
     async getEmployees() {
-        const employees = await this.empDbHandler.getEmployees()
-        return employees
+        // Returns all employees registered in the system.
+        return await this.empDbHandler.getEmployees()
     }
 }
 
