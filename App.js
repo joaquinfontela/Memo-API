@@ -36,7 +36,6 @@ app.get('/projects', async (req, res) => {
 
 
 // Get all works in project with id 'projectId'.
-
 app.get('/works/:projectId', async (req, res) => {
     const data = await projectsApiHandler.getAllWorksFromProject(req.params.projectId)
     res.status(201).json({

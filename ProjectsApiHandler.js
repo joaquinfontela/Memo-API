@@ -38,9 +38,8 @@ class ProjectsApiHandler {
     async getProjectIdAssociatedToWork(workId) {
         // Recieves a work id 'workId' and returns the id of the project in which
         // the work was registered.
-        if (workId < 10) return 1;
-        else if (workId < 20) return 2;
-        else return 3;
+        const data = await axios.get(`https://desolate-journey-04573.herokuapp.com/api/task/${workId}`)
+        return data.data.results.id_project
     }
 
 }
