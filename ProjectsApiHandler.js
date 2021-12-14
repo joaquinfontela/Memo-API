@@ -39,7 +39,7 @@ class ProjectsApiHandler {
         // Recieves a task id 'taskId' and returns the id of the project in which
         // the task was registered.
         const data = await axios.get(`https://desolate-journey-04573.herokuapp.com/api/task/${taskId}`)
-        return data.data.results.id_project
+        return data.data.results[0].id_project
     }
 
 }
