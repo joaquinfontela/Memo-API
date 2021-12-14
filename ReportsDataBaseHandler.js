@@ -23,72 +23,12 @@ class ReportsDataBaseHandler {
         // string parameters.
         // The return value is an array of objects in the format:
         // {id, employee name, employee last name, task id, date, minutes dedicated}
-        const res = await this.client.query(`SELECT resources.id, name, last_name, task_id, date, minutes 
+        const res = await this.client.query(`SELECT assigned_time.id, name, last_name, task_id, date, minutes 
                                            FROM public.assigned_time 
                                            INNER JOIN public.resources ON resources.id = assigned_time.resource_id
                                            WHERE date BETWEEN '${init_date}':: date AND '${end_date}':: date
                                         `)
         return res.rows
-    }
-
-
-    getReportsByProjectId(projectId) {
-        // Returns all the reports where the project id is 'projectId'.
-        // The return value is an array of objects in the format:
-        // {id, employee name, employee last name, task id, date, minutes dedicated}
-        if (projectId == 1) {
-            return [{
-                id: 1,
-                name: 'Joaquín',
-                last_name: 'Pepito App',
-                task_id: 1,
-                date: '2/4/2022',
-                minutes: 180
-            },
-            {
-                id: 2,
-                name: 'Joaquín',
-                last_name: 'Betz',
-                task_id: 4,
-                date: '2/4/2022',
-                minutes: 120
-            },
-            {
-                id: 3,
-                name: 'Joaquín',
-                last_name: 'Betz',
-                task_id: 2,
-                date: '2/4/2022',
-                minutes: 240
-            }]
-        }
-
-        else {
-            return [{
-                id: 7,
-                name: 'Lionel',
-                last_name: 'Messi',
-                task_id: 4,
-                date: '21/11/2021',
-                minutes: 90
-            },
-            {
-                id: 8,
-                name: 'Daniil',
-                last_name: 'Medvedev',
-                task_id: 11,
-                date: '20/11/2021',
-                minutes: 120
-            },
-            {
-                id: 9,
-                name: 'Joaquín',
-                last_name: 'Fontela',
-                task_id: 3,
-                date: '24/11/2021',
-                minutes: 180
-            }]
-        }
     }
 
 
@@ -110,7 +50,7 @@ class ReportsDataBaseHandler {
         // Returns all the reports where the task id is 'taskId'
         // The return value is an array of objects in the format:
         // {id, employee name, employee last name, task id, date, minutes dedicated}
-        const res = await this.client.query(`SELECT resources.id, name, last_name, task_id, date, minutes
+        const res = await this.client.query(`SELECT assigned_time.id, name, last_name, task_id, date, minutes
                                            FROM public.assigned_time 
                                            INNER JOIN public.resources ON resources.id = assigned_time.resource_id
                                            WHERE task_id = ${taskId}

@@ -25,7 +25,7 @@ app.get('/employees', async (req, res) => {
 })
 
 
-// Get all proyects.
+// Get all projects.
 app.get('/projects', async (req, res) => {
     const data = await projectsApiHandler.getAllProjects()
     res.status(201).json({
@@ -56,7 +56,6 @@ app.get('/tasks/:taskId/:empId', async (req, res) => {
 
 
 // Get all reports filtered by (task id or project id or date).
-
 app.get('/reports', async (req, res) => {
     let data
     if (req.body.taskId) {
@@ -98,8 +97,3 @@ app.delete('/reports/:id', async (req, res) => {
 })
 
 app.listen(3000)
-
-
-// Necesito: pasar id de una tarea y obtener el id y el nombre del proyecto asociado.
-// Necesito: pasar el id de un proyecto y obtener todas sus tareas asociadas (id, nombre).
-// Necesito: todos los proyectos (id, nombre).

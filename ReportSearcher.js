@@ -35,12 +35,24 @@ class ReportSearcher {
         // string parameters.
         // The return value is an array of objects in the format:
         // {id, employee name, employee last name, project name, task name, date, minutes dedicated}
+        const projects = await this.projectsApiHandler.getAllProjects()
+        const projectDict = this.getProjectDict(projects)
+
+        const tasks = await this.projectsApiHandler.getAllTasks()
+        const taskDict = this.getTaskDict(tasks)
+
         const reports = await this.reportsDbHandler.getReportsByDate(init_date, end_date)
 
         let updatedReports = []
         for (let report of reports) {
-            const updatedReport = await this.updateReportTaskAndProyectName(report)
-            updatedReports.push(updatedReport)
+            const projectId = taskDict[report.task_id].project_id
+            const projectName = projectDict[projectId]
+            const taskName = taskDict[report.task_id].name
+
+            report.project = projectName
+            report.task = taskName
+            delete report.task_id
+            updatedReports.push(report)
         }
 
         return updatedReports
@@ -51,14 +63,20 @@ class ReportSearcher {
         // The function returns all the reports where the project id is 'projectId'.
         // The return value is an array of objects in the format:
         // {id, employee name, employee last name, project name, task name, date, minutes dedicated}
+        const projects = await this.projectsApiHandler.getAllProjects()
+        const projectName = projects.filter(p => (p.id === projectId))[0].name
+
         const tasks = await this.projectsApiHandler.getAllTasksFromProject(projectId)
 
         let reports = []
         for (let task of tasks) {
             const newReports = await this.reportsDbHandler.getReportsByTaskId(task.id)
             for (let report of newReports) {
-                const updatedReport = await this.updateReportTaskAndProyectName(report, tasks)
-                reports.push(updatedReport)
+                const taskName = tasks.filter(w => (w.id === report.task_id))[0].name
+                report.project = projectName
+                report.task = taskName
+                delete report.task_id
+                reports.push(report)
             }
         }
 
@@ -79,39 +97,44 @@ class ReportSearcher {
         // The function returns all the reports where the task id is 'taskId'.
         // The return value is an array of objects in the format:
         // {id, employee name, employee last name, project name, task name, date, minutes dedicated}
+        const projectId = await this.projectsApiHandler.getProjectIdAssociatedToTask(taskId)
+
+        const projects = await this.projectsApiHandler.getAllProjects()
+        const projectName = projects.filter(p => (p.id === projectId))[0].name
+
+        const tasks = await this.projectsApiHandler.getAllTasksFromProject(projectId)
+        const taskName = tasks.filter(w => (w.id === taskId))[0].name
+
         const reports = await this.reportsDbHandler.getReportsByTaskId(taskId)
 
         let updatedReports = []
         for (let report of reports) {
-            const updatedReport = await this.updateReportTaskAndProyectName(report)
-            updatedReports.push(updatedReport)
+            report.project = projectName
+            report.task = taskName
+            delete report.task_id
+            updatedReports.push(report)
         }
 
         return updatedReports
     }
 
-    async updateReportTaskAndProyectName(report, tasks = undefined) {
-        // Receives 'report', an object representing a report as a parameter
-        // and an optional parameter 'tasks' which represents the tasks associated with the project
-        // in which the report took place.
-        // Returns the report updated with additional attributes: 'project' (name) and 'task' (name)
-        // and deletes its task_id attribute.
-        const projectId = await this.projectsApiHandler.getProjectIdAssociatedToTask(report.task_id)
-
-        const projects = await this.projectsApiHandler.getAllProjects()
-        const projectName = projects.filter(p => (p.id === projectId))[0].name
-
-        if (!tasks) {
-            tasks = await this.projectsApiHandler.getAllTasksFromProject(projectId)
+    getProjectDict(projects) {
+        let dict = {}
+        for (let p of projects) {
+            dict[p.id] = p.name
         }
-        console.log(tasks, report.task_id)
-        const taskName = tasks.filter(w => (w.id === report.task_id))[0].name
+        return dict
+    }
 
-        report.project = projectName
-        report.task = taskName
-        delete report.task_id
-
-        return report
+    getTaskDict(tasks) {
+        let dict = {}
+        for (let t of tasks) {
+            dict[t.id] = {
+                name: t.name,
+                project_id: t.id_project
+            }
+        }
+        return dict
     }
 }
 module.exports = ReportSearcher

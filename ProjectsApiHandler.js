@@ -20,6 +20,21 @@ class ProjectsApiHandler {
         return res
     }
 
+    async getAllTasks() {
+        // Returns an array with all existent tasks in the following format:
+        // {id, task name}.
+        const data = await axios.get('https://desolate-journey-04573.herokuapp.com/api/tasks')
+        let res = []
+        for (let task of data.data.results) {
+            res.push({
+                id: task.id,
+                name: task.name,
+                id_project: task.id_project
+            })
+        }
+        return res
+    }
+
     async getAllTasksFromProject(projectId) {
         // Returns an array with all existent tasks which correspond to project
         // with id 'projectId' in the following format:
