@@ -20,25 +20,25 @@ class ProjectsApiHandler {
         return res
     }
 
-    async getAllWorksFromProject(projectId) {
-        // Returns an array with all existent works which correspond to project
+    async getAllTasksFromProject(projectId) {
+        // Returns an array with all existent tasks which correspond to project
         // with id 'projectId' in the following format:
-        // {id, work name}.
+        // {id, task name}.
         const data = await axios.get(`https://desolate-journey-04573.herokuapp.com/api/task/set/${projectId}`)
         let res = []
-        for (let work of data.data.results) {
+        for (let task of data.data.results) {
             res.push({
-                id: work.id,
-                name: work.name
+                id: task.id,
+                name: task.name
             })
         }
         return res
     }
 
-    async getProjectIdAssociatedToWork(workId) {
-        // Recieves a work id 'workId' and returns the id of the project in which
-        // the work was registered.
-        const data = await axios.get(`https://desolate-journey-04573.herokuapp.com/api/task/${workId}`)
+    async getProjectIdAssociatedToTask(taskId) {
+        // Recieves a task id 'taskId' and returns the id of the project in which
+        // the task was registered.
+        const data = await axios.get(`https://desolate-journey-04573.herokuapp.com/api/task/${taskId}`)
         return data.data.results.id_project
     }
 

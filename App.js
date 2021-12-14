@@ -35,9 +35,9 @@ app.get('/projects', async (req, res) => {
 })
 
 
-// Get all works in project with id 'projectId'.
-app.get('/works/:projectId', async (req, res) => {
-    const data = await projectsApiHandler.getAllWorksFromProject(req.params.projectId)
+// Get all tasks in project with id 'projectId'.
+app.get('/tasks/:projectId', async (req, res) => {
+    const data = await projectsApiHandler.getAllTasksFromProject(req.params.projectId)
     res.status(201).json({
         status: 'OK',
         data: data
@@ -45,9 +45,9 @@ app.get('/works/:projectId', async (req, res) => {
 })
 
 
-// Get all works done by employee with id 'empId' for work with id 'workId'.
-app.get('/works/:workId/:empId', async (req, res) => {
-    const data = await reportSearcher.getReportsByWorkAndEmployeeIds(req.params.workId, req.params.empId)
+// Get all tasks done by employee with id 'empId' for tasks with id 'tasksId'.
+app.get('/tasks/:taskId/:empId', async (req, res) => {
+    const data = await reportSearcher.getReportsByTaskAndEmployeeIds(req.params.taskId, req.params.empId)
     res.status(201).json({
         status: 'OK',
         data: data
@@ -55,12 +55,12 @@ app.get('/works/:workId/:empId', async (req, res) => {
 })
 
 
-// Get all reports filtered by (work id or project id or date).
+// Get all reports filtered by (task id or project id or date).
 
 app.get('/reports', async (req, res) => {
     let data
-    if (req.body.workId) {
-        data = await reportSearcher.getReportsByWorkId(req.body.workId)
+    if (req.body.taskId) {
+        data = await reportSearcher.getReportsByTaskId(req.body.taskId)
 
     } else if (req.body.projectId) {
         data = await reportSearcher.getReportsByProjectId(req.body.projectId)
@@ -78,7 +78,7 @@ app.get('/reports', async (req, res) => {
 // Create new report with params specified in req.body
 app.post('/reports', async (req, res) => {
     let status = await reportHandler.saveReport(req.body.employeeId,
-        req.body.workId,
+        req.body.taskId,
         req.body.date,
         req.body.hours,
         req.body.minutes,
