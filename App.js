@@ -3,9 +3,11 @@ const ProjectsApiHandler = require('./ProjectsApiHandler')
 const ReportHandler = require('./ReportHandler')
 const ReportSearcher = require('./ReportSearcher')
 const express = require("express")
+var bodyParser = require('body-parser');
 const app = express()
 
-var bodyParser = require('body-parser');
+
+app.set('port', process.env.PORT || 4000)
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
