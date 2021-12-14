@@ -1,3 +1,7 @@
+const axios = require('axios');
+const { response } = require('express');
+
+
 class ProjectsApiHandler {
 
     constructor() { }
@@ -5,22 +9,15 @@ class ProjectsApiHandler {
     async getAllProjects() {
         // Returns an array with all existent projects in the following format:
         // {id, project name}.
-        return [{
-            id: 1,
-            name: 'Pepito App'
-        },
-        {
-            id: 2,
-            name: 'PSG'
-        },
-        {
-            id: 3,
-            name: 'ATP'
-        },
-        {
-            id: 4,
-            name: 'PSA'
-        }]
+        const data = await axios.get('https://desolate-journey-04573.herokuapp.com/api/project')
+        let res = []
+        for (let proj of data.data.results) {
+            res.push({
+                id: proj.id,
+                name: proj.name
+            })
+        }
+        return res
     }
 
     async getAllWorksFromProject(projectId) {
