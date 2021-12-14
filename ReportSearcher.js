@@ -109,6 +109,7 @@ class ReportSearcher {
         // {id, employee name, employee last name, project name, task name, date, minutes dedicated}
         const projectId = await this.projectsApiHandler.getProjectIdAssociatedToTask(taskId)
         if (projectId == undefined) return []
+        console.log('not project undefined')
 
         const projects = await this.projectsApiHandler.getAllProjects()
         const projectName = projects.filter(p => (p.id === projectId))[0].name
