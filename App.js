@@ -6,8 +6,6 @@ const express = require("express")
 var bodyParser = require('body-parser');
 const app = express()
 
-
-app.set('port', process.env.PORT || 3000)
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -47,8 +45,8 @@ app.get('/tasks/:projectId', async (req, res) => {
 })
 
 
-// Get all tasks done by employee with id 'empId' for tasks with id 'tasksId'.
-app.get('/tasks/:taskId/:empId', async (req, res) => {
+// Get all reports done by employee with id 'empId' for tasks with id 'tasksId'.
+app.get('/reports/:taskId/:empId', async (req, res) => {
     const data = await reportSearcher.getReportsByTaskAndEmployeeIds(req.params.taskId, req.params.empId)
     res.status(201).json({
         status: 'OK',
@@ -97,5 +95,6 @@ app.delete('/reports/:id', async (req, res) => {
         status: status
     })
 })
+
 
 app.listen(process.env.PORT || 3000)

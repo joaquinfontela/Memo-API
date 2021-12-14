@@ -64,7 +64,13 @@ class ReportSearcher {
         // The return value is an array of objects in the format:
         // {id, employee name, employee last name, project name, task name, date, minutes dedicated}
         const projects = await this.projectsApiHandler.getAllProjects()
-        const projectName = projects.filter(p => (p.id === projectId))[0].name
+        const project = projects.filter(p => (p.id === projectId))[0]
+        let projectName
+        if (project == undefined) {
+            projectName = 'ERR'
+        } else {
+            projectName = project.name
+        }
 
         const tasks = await this.projectsApiHandler.getAllTasksFromProject(projectId)
 
@@ -72,7 +78,15 @@ class ReportSearcher {
         for (let task of tasks) {
             const newReports = await this.reportsDbHandler.getReportsByTaskId(task.id)
             for (let report of newReports) {
-                const taskName = tasks.filter(w => (w.id === report.task_id))[0].name
+
+                const task = tasks.filter(w => (w.id === report.task_id))[0]
+                let taskName
+                if (task == undefined) {
+                    taskName = 'ERR'
+                } else {
+                    taskName = task.name
+                }
+
                 report.project = projectName
                 report.task = taskName
                 delete report.task_id
@@ -100,10 +114,22 @@ class ReportSearcher {
         const projectId = await this.projectsApiHandler.getProjectIdAssociatedToTask(taskId)
 
         const projects = await this.projectsApiHandler.getAllProjects()
-        const projectName = projects.filter(p => (p.id === projectId))[0].name
+        const project = projects.filter(p => (p.id === projectId))[0]
+        let projectName
+        if (project == undefined) {
+            projectName = 'ERR'
+        } else {
+            projectName = project.name
+        }
 
         const tasks = await this.projectsApiHandler.getAllTasksFromProject(projectId)
-        const taskName = tasks.filter(w => (w.id === taskId))[0].name
+        const task = tasks.filter(w => (w.id === taskId))[0]
+        let taskName
+        if (task == undefined) {
+            taskName = 'ERR'
+        } else {
+            taskName = task.name
+        }
 
         const reports = await this.reportsDbHandler.getReportsByTaskId(taskId)
 
