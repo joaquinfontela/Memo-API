@@ -14,6 +14,13 @@ class EmployeesDataBaseHandler {
         const res = await this.client.query('SELECT * FROM public.resources')
         return res.rows
     }
+
+    async getEmployeesWithIds(ids) {
+        const res = await this.client.query(`SELECT * FROM public.resources 
+                                             WHERE id in (${ids})
+                                            `)
+        return res.rows
+    }
 }
 
 module.exports = EmployeesDataBaseHandler

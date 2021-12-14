@@ -20,6 +20,10 @@ class EmployeesSearcher {
         // Returns all employees registered in the system.
         return await this.empDbHandler.getEmployees()
     }
+
+    async getEmployeesWithIds(ids) {
+        return await this.empDbHandler.getEmployeesWithIds(ids)
+    }
 }
 
 module.exports = EmployeesSearcher

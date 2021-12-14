@@ -16,8 +16,18 @@ let projectsApiHandler = new ProjectsApiHandler()
 
 
 // Get all employees.
-app.get('/employees', async (req, res) => {
+app.get('/employees/all', async (req, res) => {
     const data = await empSearcher.getEmployees()
+    res.status(201).json({
+        status: 'OK',
+        data: data
+    })
+})
+
+
+// Get all employees with ids in 'req.body.ids'
+app.get('/employees', async (req, res) => {
+    const data = await empSearcher.getEmployeesWithIds(req.body.ids)
     res.status(201).json({
         status: 'OK',
         data: data
