@@ -65,13 +65,9 @@ class ReportSearcher {
         // {id, employee name, employee last name, project name, task name, date, minutes dedicated}
         const projects = await this.projectsApiHandler.getAllProjects()
         const project = projects.filter(p => (p.id === projectId))[0]
-        let projectName
         if (project == undefined) {
-            projectName = 'ERR'
-        } else {
-            projectName = project.name
+            return []
         }
-
         const tasks = await this.projectsApiHandler.getAllTasksFromProject(projectId)
 
         let reports = []
@@ -87,7 +83,7 @@ class ReportSearcher {
                     taskName = task.name
                 }
 
-                report.project = projectName
+                report.project = project.name
                 report.task = taskName
                 delete report.task_id
                 reports.push(report)
@@ -112,24 +108,18 @@ class ReportSearcher {
         // The return value is an array of objects in the format:
         // {id, employee name, employee last name, project name, task name, date, minutes dedicated}
         const projectId = await this.projectsApiHandler.getProjectIdAssociatedToTask(taskId)
+        if (projectId == undefined) return []
 
         const projects = await this.projectsApiHandler.getAllProjects()
-        const project = projects.filter(p => (p.id === projectId))[0]
-        let projectName
-        if (project == undefined) {
-            projectName = 'ERR'
-        } else {
-            projectName = project.name
-        }
+        const projectName = projects.filter(p => (p.id === projectId))[0].name
+
 
         const tasks = await this.projectsApiHandler.getAllTasksFromProject(projectId)
         const task = tasks.filter(w => (w.id === taskId))[0]
-        let taskName
         if (task == undefined) {
-            taskName = 'ERR'
-        } else {
-            taskName = task.name
+            return []
         }
+        const taskName = task.name
 
         const reports = await this.reportsDbHandler.getReportsByTaskId(taskId)
 
