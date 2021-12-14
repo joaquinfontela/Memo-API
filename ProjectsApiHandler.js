@@ -24,53 +24,15 @@ class ProjectsApiHandler {
         // Returns an array with all existent works which correspond to project
         // with id 'projectId' in the following format:
         // {id, work name}.
-        if (projectId == 1) {
-            return [
-                {
-                    id: 2,
-                    name: 'modelado signup'
-                },
-                {
-                    id: 3,
-                    name: 'modelado login'
-                },
-                {
-                    id: 8,
-                    name: 'code backend'
-                },
-                {
-                    id: 9,
-                    name: 'code frontend'
-                }]
-        } else if (projectId == 2) {
-            return [
-                {
-                    id: 10,
-                    name: 'make an assist'
-                },
-                {
-                    id: 11,
-                    name: 'score a goal'
-                },
-                {
-                    id: 12,
-                    name: 'save a penalty'
-                },
-                {
-                    id: 13,
-                    name: 'win at home'
-                },
-                {
-                    id: 19,
-                    name: 'win away'
-                }]
-        } else {
-            return [
-                {
-                    id: 22,
-                    name: 'win US Open'
-                }]
+        const data = await axios.get(`https://desolate-journey-04573.herokuapp.com/api/task/set/${projectId}`)
+        let res = []
+        for (let work of data.data.results) {
+            res.push({
+                id: work.id,
+                name: work.name
+            })
         }
+        return res
     }
 
     async getProjectIdAssociatedToWork(workId) {

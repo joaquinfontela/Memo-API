@@ -26,7 +26,6 @@ app.get('/employees', async (req, res) => {
 
 
 // Get all proyects.
-
 app.get('/projects', async (req, res) => {
     const data = await projectsApiHandler.getAllProjects()
     res.status(201).json({
