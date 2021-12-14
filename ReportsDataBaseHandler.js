@@ -72,6 +72,15 @@ class ReportsDataBaseHandler {
                                     `)
         return { status: "OK" }
     }
+
+
+    async updateReport(reportId, minutes) {
+        await this.client.query(`UPDATE public.assigned_time
+                                 SET minutes = ${minutes}
+                                 WHERE id = ${reportId})
+                                `)
+        return { status: "OK" }
+    }
 }
 
 module.exports = ReportsDataBaseHandler

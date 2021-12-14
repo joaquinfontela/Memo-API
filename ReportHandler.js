@@ -34,6 +34,11 @@ class ReportHandler {
             date, hours * 60 + minutes, description)
     }
 
+
+    async updateReport(reportId, hours, minutes) {
+        return await this.reportsDbHandler.updateReport(reportId, hours * 60 + minutes)
+    }
+
 }
 
 module.exports = ReportHandler

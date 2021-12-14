@@ -98,6 +98,15 @@ app.post('/reports', async (req, res) => {
 })
 
 
+// Update report with id 'repId' with new time.
+app.put('/reports/:repId', async (req, res) => {
+    const status = await reportHandler.updateReport(req.params.repId, req.body.hours, req.body.minutes)
+    res.status(201).json({
+        status: status
+    })
+})
+
+
 // Delete reports with id 'id'.
 app.delete('/reports/:id', async (req, res) => {
     let status = await reportHandler.deleteReport(req.params.id)
