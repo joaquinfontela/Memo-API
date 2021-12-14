@@ -77,7 +77,7 @@ class ReportsDataBaseHandler {
     async updateReport(reportId, minutes) {
         await this.client.query(`UPDATE public.assigned_time
                                  SET minutes = ${minutes}
-                                 WHERE id = ${reportId})
+                                 WHERE id = ${reportId}
                                 `)
         return { status: "OK" }
     }
