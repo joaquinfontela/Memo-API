@@ -37,7 +37,7 @@ class ReportsDataBaseHandler {
         // the employee id is 'employeeId'.
         // The return value is an array of objects in the format:
         // {date, minutes dedicated}
-        const res = await this.client.query(`SELECT date, minutes
+        const res = await this.client.query(`SELECT SUM(minutes)
                                            FROM public.assigned_time 
                                            WHERE task_id = ${taskId} AND resource_id = ${employeeId}
                                             `)
