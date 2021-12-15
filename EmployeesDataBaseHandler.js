@@ -16,6 +16,7 @@ class EmployeesDataBaseHandler {
     }
 
     async getEmployeesWithIds(ids) {
+        // Returns all employees with ids in 'ids' array in the system.
         const res = await this.client.query(`SELECT * FROM public.resources 
                                              WHERE id in (${ids})
                                             `)

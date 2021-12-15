@@ -93,15 +93,6 @@ class ReportSearcher {
     }
 
 
-    async getTimeDestinedToProject(projectId) {
-        // The function returns the time in minutes destined to all the reports where 
-        // the project id is 'projectId'.
-        const tasks = await this.projectsApiHandler.getAllTasksFromProject(projectId)
-        const tasksIds = tasks.map(t => t.id)
-        return await this.reportsDbHandler.getTimeDestinedToTasks(tasksIds)
-    }
-
-
     async getReportsByTaskId(taskId) {
         // The function returns all the reports where the task id is 'taskId'.
         // The return value is an array of objects in the format:
@@ -133,6 +124,16 @@ class ReportSearcher {
         return updatedReports
     }
 
+
+    async getTimeDestinedToProject(projectId) {
+        // The function returns the time in minutes destined to all the reports where 
+        // the project id is 'projectId'.
+        const tasks = await this.projectsApiHandler.getAllTasksFromProject(projectId)
+        const tasksIds = tasks.map(t => t.id)
+        return await this.reportsDbHandler.getTimeDestinedToTasks(tasksIds)
+    }
+
+
     getProjectDict(projects) {
         let dict = {}
         for (let p of projects) {
@@ -140,6 +141,7 @@ class ReportSearcher {
         }
         return dict
     }
+
 
     getTaskDict(tasks) {
         let dict = {}

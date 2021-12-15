@@ -73,6 +73,7 @@ class ReportsDataBaseHandler {
 
 
     async updateReport(reportId, minutes) {
+        // Updates the time destined to report with id 'reportId' in the database.
         await this.client.query(`UPDATE public.assigned_time
                                  SET minutes = ${minutes}
                                  WHERE id = ${reportId}

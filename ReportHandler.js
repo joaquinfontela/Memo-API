@@ -36,6 +36,7 @@ class ReportHandler {
 
 
     async updateReport(reportId, hours, minutes) {
+        // Updates the time destined to report with id 'reportId' in the database.
         return await this.reportsDbHandler.updateReport(reportId, hours * 60 + minutes)
     }
 

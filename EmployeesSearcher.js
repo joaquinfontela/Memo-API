@@ -22,6 +22,7 @@ class EmployeesSearcher {
     }
 
     async getEmployeesWithIds(ids) {
+        // Returns all employees with ids in 'ids' array in the system.
         return await this.empDbHandler.getEmployeesWithIds(ids)
     }
 }
