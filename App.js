@@ -58,17 +58,6 @@ app.get('/tasks/:projectId', async (req, res) => {
 })
 
 
-// Get all time destined by employee with id 'empId' for tasks with id 'tasksId'.
-app.get('/reports/time/:taskId/:empId', async (req, res) => {
-    const data = await reportSearcher.getTimeDestinedToReportsByTaskAndEmployeeIds(req.params.taskId,
-        req.params.empId)
-    res.status(201).json({
-        status: 'OK',
-        data: data
-    })
-})
-
-
 // Get all time destined to project with id 'projectId'.
 app.get('/reports/time/:projectId', async (req, res) => {
     const data = await reportSearcher.getTimeDestinedToProject(req.params.projectId)

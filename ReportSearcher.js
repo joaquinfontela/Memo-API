@@ -102,13 +102,6 @@ class ReportSearcher {
     }
 
 
-    async getTimeDestinedToReportsByTaskAndEmployeeIds(taskId, employeeId) {
-        // The function returns the time in minutes destined to all the reports where 
-        // the task id is 'taskId' and the employee id is 'employeeId'.
-        return await this.reportsDbHandler.getTimeDestinedToReportsByTaskAndEmployeeIds(taskId, employeeId)
-    }
-
-
     async getReportsByTaskId(taskId) {
         // The function returns all the reports where the task id is 'taskId'.
         // The return value is an array of objects in the format:

@@ -46,18 +46,6 @@ class ReportsDataBaseHandler {
     }
 
 
-    async getTimeDestinedToReportsByTaskAndEmployeeIds(taskId, employeeId) {
-        // The function returns the time in minutes destined to all the reports where 
-        // the task id is 'taskId' and the employee id is 'employeeId'.
-        const res = await this.client.query(`SELECT SUM(minutes)
-                                           FROM public.assigned_time 
-                                           WHERE task_id = ${taskId} AND resource_id = ${employeeId}
-                                            `)
-
-        return res.rows[0].sum
-    }
-
-
     async getTimeDestinedToTasks(tasksIds) {
         // The function returns the time in minutes destined to all the reports where 
         // the task id is in 'tasksIds' array.
