@@ -3,11 +3,14 @@ const ProjectsApiHandler = require('./ProjectsApiHandler')
 const ReportHandler = require('./ReportHandler')
 const ReportSearcher = require('./ReportSearcher')
 const express = require("express")
-var bodyParser = require('body-parser');
+const cors = require("cors")
+var bodyParser = require('body-parser')
 const app = express()
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(cors())
+app.options('*', cors())
 
 let reportSearcher = new ReportSearcher()
 let reportHandler = new ReportHandler()
