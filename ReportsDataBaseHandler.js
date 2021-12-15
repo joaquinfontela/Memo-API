@@ -32,20 +32,6 @@ class ReportsDataBaseHandler {
     }
 
 
-    async getReportsByTaskAndEmployeeIds(taskId, employeeId) {
-        // The function returns all the reports where the task id is 'taskId' and
-        // the employee id is 'employeeId'.
-        // The return value is an array of objects in the format:
-        // {date, minutes dedicated}
-        const res = await this.client.query(`SELECT SUM(minutes)
-                                           FROM public.assigned_time 
-                                           WHERE task_id = ${taskId} AND resource_id = ${employeeId}
-                                            `)
-
-        return res.rows
-    }
-
-
     async getReportsByTaskId(taskId) {
         // Returns all the reports where the task id is 'taskId'
         // The return value is an array of objects in the format:
@@ -57,6 +43,30 @@ class ReportsDataBaseHandler {
                                             `)
 
         return res.rows
+    }
+
+
+    async getTimeDestinedToReportsByTaskAndEmployeeIds(taskId, employeeId) {
+        // The function returns the time in minutes destined to all the reports where 
+        // the task id is 'taskId' and the employee id is 'employeeId'.
+        const res = await this.client.query(`SELECT SUM(minutes)
+                                           FROM public.assigned_time 
+                                           WHERE task_id = ${taskId} AND resource_id = ${employeeId}
+                                            `)
+
+        return res.rows[0].sum
+    }
+
+
+    async getTimeDestinedToTasks(tasksIds) {
+        // The function returns the time in minutes destined to all the reports where 
+        // the task id is in 'tasksIds' array.
+        const res = await this.client.query(`SELECT SUM(minutes)
+                                           FROM public.assigned_time 
+                                           WHERE task_id IN (${tasksIds})
+                                            `)
+
+        return res.rows[0].sum
     }
 
 

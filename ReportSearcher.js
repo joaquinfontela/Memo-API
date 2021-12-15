@@ -93,12 +93,19 @@ class ReportSearcher {
     }
 
 
-    async getReportsByTaskAndEmployeeIds(taskId, employeeId) {
-        // The function returns all the reports where the task id is 'taskId' and
-        // the employee id is 'employeeId'.
-        // The return value is an array of objects in the format:
-        // {date, minutes dedicated}
-        return await this.reportsDbHandler.getReportsByTaskAndEmployeeIds(taskId, employeeId)
+    async getTimeDestinedToProject(projectId) {
+        // The function returns the time in minutes destined to all the reports where 
+        // the project id is 'projectId'.
+        const tasks = await this.projectsApiHandler.getAllTasksFromProject(projectId)
+        const tasksIds = tasks.map(t => t.id)
+        return await this.reportsDbHandler.getTimeDestinedToTasks(tasksIds)
+    }
+
+
+    async getTimeDestinedToReportsByTaskAndEmployeeIds(taskId, employeeId) {
+        // The function returns the time in minutes destined to all the reports where 
+        // the task id is 'taskId' and the employee id is 'employeeId'.
+        return await this.reportsDbHandler.getTimeDestinedToReportsByTaskAndEmployeeIds(taskId, employeeId)
     }
 
 
