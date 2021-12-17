@@ -30,6 +30,11 @@ class ReportSearcher {
     }
 
 
+    async getReports() {
+        return await this.reportsDbHandler.getReports()
+    }
+
+
     async getReportsByDate(init_date, end_date) {
         // The function returns all the reports which were accomplished between 'init_date' and 'end_date'
         // string parameters.

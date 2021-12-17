@@ -77,8 +77,10 @@ app.get('/reports', async (req, res) => {
     } else if (req.body.projectId) {
         data = await reportSearcher.getReportsByProjectId(req.body.projectId)
 
-    } else {
+    } else if (req.body.init_date && req.body.end_date) {
         data = await reportSearcher.getReportsByDate(req.body.init_date, req.body.end_date)
+    } else {
+        data = await reportSearcher.getReports()
     }
     res.status(201).json({
         status: 'OK',

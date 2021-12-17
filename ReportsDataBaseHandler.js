@@ -18,6 +18,15 @@ class ReportsDataBaseHandler {
     }
 
 
+    async getReports() {
+        const res = await this.client.query(`SELECT assigned_time.id, name, last_name, task_id, date, minutes
+                                           FROM public.assigned_time 
+                                           INNER JOIN public.resources ON resources.id = assigned_time.resource_id
+                                            `)
+        return res.rows
+    }
+
+
     async getReportsByDate(init_date, end_date) {
         // Returns all the reports which were accomplished between 'init_date' and 'end_date'
         // string parameters.
