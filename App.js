@@ -79,6 +79,7 @@ app.get('/reports', async (req, res) => {
 
     } else if (req.body.init_date && req.body.end_date) {
         data = await reportSearcher.getReportsByDate(req.body.init_date, req.body.end_date)
+
     } else {
         data = await reportSearcher.getReports()
     }

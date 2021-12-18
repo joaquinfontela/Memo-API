@@ -31,7 +31,27 @@ class ReportSearcher {
 
 
     async getReports() {
-        return await this.reportsDbHandler.getReports()
+        const projects = await this.projectsApiHandler.getAllProjects()
+        const projectDict = this.getProjectDict(projects)
+
+        const tasks = await this.projectsApiHandler.getAllTasks()
+        const taskDict = this.getTaskDict(tasks)
+
+        const reports = await this.reportsDbHandler.getReports()
+
+        let updatedReports = []
+        for (let report of reports) {
+            const projectId = taskDict[report.task_id].project_id
+            const projectName = projectDict[projectId]
+            const taskName = taskDict[report.task_id].name
+
+            report.project = projectName
+            report.task = taskName
+            delete report.task_id
+            updatedReports.push(report)
+        }
+
+        return updatedReports
     }
 
 
