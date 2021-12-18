@@ -31,6 +31,7 @@ class ReportSearcher {
 
 
     async getReports() {
+        return await this.reportsDbHandler.getReports()
         const projects = await this.projectsApiHandler.getAllProjects()
         const projectDict = this.getProjectDict(projects)
 
