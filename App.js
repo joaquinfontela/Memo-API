@@ -68,27 +68,44 @@ app.get('/reports/time/:projectId', async (req, res) => {
 })
 
 
-// Get all reports filtered by (task id or project id or date).
+// Get all reports.
 app.get('/reports', async (req, res) => {
-    let data
-    if (req.body.taskId) {
-        data = await reportSearcher.getReportsByTaskId(req.body.taskId)
-
-    } else if (req.body.projectId) {
-        data = await reportSearcher.getReportsByProjectId(req.body.projectId)
-
-    } else if (req.body.init_date && req.body.end_date) {
-        data = await reportSearcher.getReportsByDate(req.body.init_date, req.body.end_date)
-
-    } else {
-        data = await reportSearcher.getReports()
-    }
+    const data = await reportSearcher.getReports()
     res.status(201).json({
         status: 'OK',
         data: data
     })
 })
 
+
+// Get all reports filtered by task id.
+app.get('/reports/filter/task/:taskId', async (req, res) => {
+    const data = await reportSearcher.getReportsByTaskId(parseInt(req.params.taskId))
+    res.status(201).json({
+        status: 'OK',
+        data: data
+    })
+})
+
+
+// Get all reports filtered by project id.
+app.get('/reports/filter/project/:projectId', async (req, res) => {
+    const data = await reportSearcher.getReportsByProjectId(parseInt(req.params.projectId))
+    res.status(201).json({
+        status: 'OK',
+        data: data
+    })
+})
+
+
+// Get all reports filtered by date.
+app.get('/reports/filter/date/:init_date/:end_date', async (req, res) => {
+    const data = await reportSearcher.getReportsByDate(req.params.init_date, req.params.end_date)
+    res.status(201).json({
+        status: 'OK',
+        data: data
+    })
+})
 
 // Create new report with params specified in req.body
 app.post('/reports', async (req, res) => {
