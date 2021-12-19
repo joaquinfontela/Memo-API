@@ -31,7 +31,7 @@ class ReportHandler {
         // 'minutes' parameter being an integer indicating the extra minutes dedicated to the task 
         //           out of entire hours.
         if (new Date() < new Date(date)) {
-            return { status: "Fecha futura ingresada" }
+            return { status: 400 }
         }
         return await this.reportsDbHandler.saveReport(employeeId, taskId,
             date, hours * 60 + minutes, description)
