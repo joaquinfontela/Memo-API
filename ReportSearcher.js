@@ -70,7 +70,6 @@ class ReportSearcher {
 
         let updatedReports = []
         for (let report of reports) {
-            console.log(taskDict, report)
             const projectId = taskDict[report.task_id].project_id
             const projectName = projectDict[projectId]
             const taskName = taskDict[report.task_id].name
