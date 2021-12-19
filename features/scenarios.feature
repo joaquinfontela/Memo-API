@@ -68,6 +68,12 @@ Feature: Scenarios from user stories
         And I enter an ending date '01/01/2022'
         Then System will show date, project, work, employee name and hours of each report in the date range selected
 
-# Report search filtered by project
+    Scenario: Report search filtered by project
+        Given I am an user
+        When User consults reports filtered by project
+        Then System informs about each of the existent reports corresponding to the project
 
-# Report search filtered by work
+    Scenario: Report search filtered by task
+        Given I am an user
+        When User consults reports filtered by task
+        Then System informs about each of the existent reports corresponding to the task

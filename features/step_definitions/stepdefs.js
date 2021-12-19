@@ -186,3 +186,27 @@ Then('System will show date, project, work, employee name and hours of each repo
     reports = await reportsSearcher.getReportsByDate(this.startingDate, this.endingDate)
     reports.forEach(r => assert(new Date(r.date) >= new Date(this.startingDate) && (new Date(r.date) <= new Date(this.endingDate))))
 })
+
+
+When('User consults reports filtered by project', async function () {
+    projects = await projectsApiHandler.getAllProjects()
+    this.project = projects[0]
+    this.reports = await reportsSearcher.getReportsByProjectId(this.project.id)
+
+})
+
+Then('System informs about each of the existent reports corresponding to the project', function () {
+    this.reports.forEach(r => r.name === this.project.name)
+})
+
+
+When('User consults reports filtered by task', async function () {
+    tasks = await projectsApiHandler.getAllTasks()
+    this.task = tasks[0]
+    this.reports = await reportsSearcher.getReportsByTaskId(this.task.id)
+
+})
+
+Then('System informs about each of the existent reports corresponding to the task', function () {
+    this.reports.forEach(r => r.name === this.task.name)
+})
