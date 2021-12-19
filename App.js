@@ -303,8 +303,7 @@ app.post('/reports', async (req, res) => {
         req.body.minutes,
         req.body.description)
     res.status(result.status).json({
-        status: result.status,
-        statusMsg: result.statusMsg
+        status: result.status
     })
 });
 

@@ -30,10 +30,8 @@ class ReportHandler {
         // 'hours' parameter being an integer indicating the entire hours dedicated to the task.
         // 'minutes' parameter being an integer indicating the extra minutes dedicated to the task 
         //           out of entire hours.
-        if (hours * 60 + minutes > 480) {
-            return { status: 400, statusMsg: "Tiempo máximo de reporte (8 horas) excedido" }
-        } else if (new Date() < new Date(date)) {
-            return { status: 400, statusMsg: "Fecha futura ingresada" }
+        if (new Date() < new Date(date)) {
+            return { status: "Fecha futura ingresada" }
         }
         return await this.reportsDbHandler.saveReport(employeeId, taskId,
             date, hours * 60 + minutes, description)
