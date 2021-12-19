@@ -294,14 +294,15 @@ app.get('/reports/filter/date/:init_date/:end_date', async (req, res) => {
  *        description: A successful report post.
  */
 app.post('/reports', async (req, res) => {
-    let status = await reportHandler.saveReport(req.body.employeeId,
+    let result = await reportHandler.saveReport(req.body.employeeId,
         req.body.taskId,
         req.body.date,
         req.body.hours,
         req.body.minutes,
         req.body.description)
-    res.status(201).json({
-        status: status
+    res.status(result.status).json({
+        status: result.status,
+        statusMsg: result.statusMsg
     })
 });
 

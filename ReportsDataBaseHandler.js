@@ -77,7 +77,7 @@ class ReportsDataBaseHandler {
                                     VALUES
                                     (${duration}, '${date}'::date, ${employeeId}, ${taskId}, '${description}')
                                     `)
-        return { status: "OK" }
+        return { status: 201, statusMsg: "OK" }
     }
 
 
