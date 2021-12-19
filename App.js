@@ -292,6 +292,8 @@ app.get('/reports/filter/date/:init_date/:end_date', async (req, res) => {
  *    responses:
  *      '201':
  *        description: A successful report post.
+ *      '400':
+ *        description: Bad parameters values.
  */
 app.post('/reports', async (req, res) => {
     let result = await reportHandler.saveReport(req.body.employeeId,

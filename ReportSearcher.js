@@ -41,12 +41,17 @@ class ReportSearcher {
 
         let updatedReports = []
         for (let report of reports) {
-            const projectId = taskDict[report.task_id].project_id
-            const projectName = projectDict[projectId]
-            const taskName = taskDict[report.task_id].name
+            if (!taskDict[report.task_id]) {
+                report.project = 'Deleted project'
+                report.task = 'Deleted task'
+            } else {
+                const projectId = taskDict[report.task_id].project_id
+                const projectName = projectDict[projectId]
+                const taskName = taskDict[report.task_id].name
 
-            report.project = projectName
-            report.task = taskName
+                report.project = projectName
+                report.task = taskName
+            }
             delete report.task_id
             updatedReports.push(report)
         }
@@ -70,14 +75,20 @@ class ReportSearcher {
 
         let updatedReports = []
         for (let report of reports) {
-            const projectId = taskDict[report.task_id].project_id
-            const projectName = projectDict[projectId]
-            const taskName = taskDict[report.task_id].name
+            if (!taskDict[report.task_id]) {
+                report.project = 'Deleted project'
+                report.task = 'Deleted task'
+            } else {
+                const projectId = taskDict[report.task_id].project_id
+                const projectName = projectDict[projectId]
+                const taskName = taskDict[report.task_id].name
 
-            report.project = projectName
-            report.task = taskName
+                report.project = projectName
+                report.task = taskName
+            }
             delete report.task_id
             updatedReports.push(report)
+
         }
 
         return updatedReports
@@ -90,7 +101,7 @@ class ReportSearcher {
         // {id, employee name, employee last name, project name, task name, date, minutes dedicated}
         const projects = await this.projectsApiHandler.getAllProjects()
         const project = projects.filter(p => (p.id === projectId))[0]
-        if (project == undefined) return
+        if (project == undefined) return []
 
         const tasks = await this.projectsApiHandler.getAllTasksFromProject(projectId)
 
@@ -102,7 +113,7 @@ class ReportSearcher {
                 const task = tasks.filter(w => (w.id === report.task_id))[0]
                 let taskName
                 if (task == undefined) {
-                    taskName = 'ERR'
+                    taskName = 'Deleted task'
                 } else {
                     taskName = task.name
                 }
@@ -123,17 +134,15 @@ class ReportSearcher {
         // The return value is an array of objects in the format:
         // {id, employee name, employee last name, project name, task name, date, minutes dedicated}
         const projectId = await this.projectsApiHandler.getProjectIdAssociatedToTask(taskId)
-        if (projectId == undefined) return
+        if (projectId == undefined) return []
 
         const projects = await this.projectsApiHandler.getAllProjects()
         const projectName = projects.filter(p => (p.id === projectId))[0].name
 
-
         const tasks = await this.projectsApiHandler.getAllTasksFromProject(projectId)
         const task = tasks.filter(w => (w.id === taskId))[0]
-        if (task == undefined) {
-            return []
-        }
+        if (task == undefined) return []
+
         const taskName = task.name
 
         const reports = await this.reportsDbHandler.getReportsByTaskId(taskId)
