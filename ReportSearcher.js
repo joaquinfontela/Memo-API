@@ -164,6 +164,7 @@ class ReportSearcher {
         // The function returns the time in minutes destined to all the reports where 
         // the project id is 'projectId'.
         const tasks = await this.projectsApiHandler.getAllTasksFromProject(projectId)
+        if (!tasks[0]) return 0
         const tasksIds = tasks.map(t => t.id)
         return await this.reportsDbHandler.getTimeDestinedToTasks(tasksIds)
     }
