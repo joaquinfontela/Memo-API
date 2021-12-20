@@ -104,7 +104,6 @@ class ReportSearcher {
         if (project == undefined) return []
 
         const tasks = await this.projectsApiHandler.getAllTasksFromProject(projectId)
-        if (tasks[0] == undefined) return []
 
         let reports = []
         for (let task of tasks) {
