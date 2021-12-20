@@ -282,7 +282,7 @@ app.get('/reports/filter/date/:init_date/:end_date', async (req, res) => {
  *        schema:
  *          type: number
  *          format: number
- *      - name: employeeId
+ *      - name: description
  *        in: body
  *        description: description of the report being posted.
  *        required: false
