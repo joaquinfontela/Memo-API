@@ -34,7 +34,7 @@ class ReportHandler {
             return { status: 400 }
         }
         return await this.reportsDbHandler.saveReport(employeeId, taskId,
-            date, hours * 60 + minutes, description)
+            date, parseInt(hours) * 60 + parseInt(minutes), description)
     }
 
 
