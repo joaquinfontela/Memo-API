@@ -1,5 +1,5 @@
 const EmployeesDataBaseHandler = require('./EmployeesDataBaseHandler')
-const db_password = require('./db_password')
+const db_password = require('./dbpassword')
 
 class EmployeesSearcher {
 

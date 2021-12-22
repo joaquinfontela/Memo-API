@@ -1,5 +1,5 @@
 const ReportsDataBaseHandler = require('./ReportsDataBaseHandler')
-const db_password = require('./db_password')
+const db_password = require('./dbpassword')
 
 class ReportHandler {
 

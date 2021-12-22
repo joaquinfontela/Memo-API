@@ -1,7 +1,7 @@
 const ReportsDataBaseHandler = require('./ReportsDataBaseHandler')
 const EmployeesDataBaseHandler = require('./EmployeesDataBaseHandler')
 const ProjectsApiHandler = require('./ProjectsApiHandler')
-const db_password = require('./db_password')
+const db_password = require('./dbpassword')
 
 class ReportSearcher {
 
