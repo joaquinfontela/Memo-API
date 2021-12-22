@@ -20,7 +20,7 @@ class ReportSearcher {
             user: 'fqhdvfjibpslvq',
             host: 'ec2-52-86-177-34.compute-1.amazonaws.com',
             database: 'd591fltfo2mqg4',
-            password: process.env.DATABASE_PASSWORD || db_password,
+            password: process.env.DATABASE_PASSWORD,
             port: 5432,
             ssl: {
                 rejectUnauthorized: false
